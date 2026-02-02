@@ -10,7 +10,7 @@ const userRouter = require('./router/userRouter');
 app.use('/api/users',userRouter);
 
 const db = require('./model/database');
-require('./model/user');
+require('./model');
 
 (async () =>{
     try{

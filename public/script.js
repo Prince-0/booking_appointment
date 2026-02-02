@@ -5,12 +5,15 @@ const API_URL = '/api/users';
 
 async function fetchUser() {
     const res = await fetch(API_URL);
-    const users = res.json();
+    const users =await res.json();
 
-    userList.innerHTML = "";
+    console.log('users from API:', users);
+
+
+    userList.innerHTML = " ";
     users.forEach(user => {
         const li = document.createElement('li');
-        li.textContent = `${user.name} - (${user.email} - ${user.contact}) 
+        li.innerHTML = `${user.name} - (${user.email} - ${user.contact})
         <button onclick="deleteUser(${user.id})">Delete</button>`;
         userList.appendChild(li);    
     });

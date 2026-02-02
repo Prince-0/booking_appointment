@@ -1,4 +1,5 @@
-const Users = require('../model/user');
+const { Users, Department, IdentityCard } = require('../model');
+
 
 const getUser = async(req,res)=>{
     try{
@@ -39,4 +40,27 @@ const deleteUser = async(req,res)=>{
 
 };
 
-module.exports = {getUser,postUser,deleteUser};
+const addingValuetoUserandIdentityTable = async(req,res)=>{
+    try{
+        const user = await Users.create(req.body.user);
+        const idCard = await IdentityCard.create({
+            ...req.body.IdentityCard , 
+            userId:user.id})
+
+        res.status(201).json({user,idCard});
+    }
+    catch(error){
+        res.status(500).json({error: error.message});
+    }
+}
+
+const addDepartment = async (req, res) => {
+    try {
+        const department = await Department.create(req.body);
+        res.status(201).json(department);
+    } catch (err) {
+        res.status(500).json({ message: 'Failed to add department' });
+    }
+};
+
+module.exports = {getUser,postUser,deleteUser,addingValuetoUserandIdentityTable,addDepartment};

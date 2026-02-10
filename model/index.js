@@ -1,6 +1,14 @@
 const Users = require('./user');
 const IdentityCard = require('./identityCard');
 const Department = require('./department');
+const Course = require('./course');
+const UserCourse = require('./userCourse');
+
+
+console.log(
+  Users.sequelize === IdentityCard.sequelize,
+  Users.sequelize === Department.sequelize
+);
 
 Users.hasOne(IdentityCard, {
     foreignKey: 'userId',
@@ -19,14 +27,23 @@ Department.hasMany(Users, {
 Users.belongsTo(Department, {
     foreignKey: 'departmentId'
 });
-console.log(
-  Users.sequelize === IdentityCard.sequelize,
-  Users.sequelize === Department.sequelize
-);
+
+Users.belongsToMany(Course, {
+  through: UserCourse,
+  foreignKey: 'userId'
+});
+
+Course.belongsToMany(Users, {
+  through: UserCourse,
+  foreignKey: 'courseId'
+});
+
 
 
 module.exports = {
     Users,
     IdentityCard,
-    Department
+    Department,
+    Course,
+    UserCourse    
 };

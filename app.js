@@ -6,8 +6,12 @@ app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
 const userRouter = require('./router/userRouter');
+const courseRouter = require('./router/courseRouter');
 
 app.use('/api/users',userRouter);
+
+app.use('/api/courses', courseRouter);
+
 
 const db = require('./model/database');
 require('./model');
